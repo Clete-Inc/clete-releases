@@ -31,6 +31,12 @@ unzip clete.zip
 # Verify checksum
 sha256sum -c *.sha256
 
+# Notify user about upcoming sudo operations
+echo "The following operations require administrator privileges:"
+echo "- Moving clete binary to /usr/local/bin/"
+echo "- Setting executable permissions"
+echo "You may be prompted for your password."
+
 # Install binary
 sudo mv clete_${VERSION}_${OS}_${ARCH} /usr/local/bin/clete
 sudo chmod +x /usr/local/bin/clete
