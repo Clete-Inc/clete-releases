@@ -28,8 +28,14 @@ echo "Downloading Clete ${VERSION} for ${OS}/${ARCH}..."
 curl -sL "$DOWNLOAD_URL" -o clete.zip
 unzip clete.zip
 
-# Verify checksum
-sha256sum -c *.sha256
+# Verify checksum - handle both Linux and macOS
+if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum -c *.sha256
+elif command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 -c *.sha256
+else
+    echo "Warning: Could not verify checksum - neither sha256sum nor shasum found"
+fi
 
 # Notify user about upcoming sudo operations
 echo "The following operations require administrator privileges:"
