@@ -6,8 +6,14 @@ This repository contains official binary releases for Clete. Each release includ
 
 ### Linux/macOS
 
+Install the latest stable release:
 ```bash
 curl -sfL https://raw.githubusercontent.com/Clete-Inc/clete-releases/main/install.sh | sh
+```
+
+Install a specific version:
+```bash
+curl -sfL https://raw.githubusercontent.com/Clete-Inc/clete-releases/main/install.sh | sh -s -- -v v1.0.0
 ```
 
 ### Windows
@@ -49,9 +55,29 @@ curl -sfL https://raw.githubusercontent.com/Clete-Inc/clete-releases/main/instal
 - Linux (64-bit, 32-bit, ARM64, ARM)
 - macOS (Intel, Apple Silicon)
 
+## Installation Options
+
+The install script (`install.sh`) supports the following options:
+
+- Install latest stable release (default):
+  ```bash
+  ./install.sh
+  ```
+
+- Install specific version:
+  ```bash
+  ./install.sh -v v1.0.0
+  ```
+
 ## Manual Installation
 
-If you prefer to download and install manually, visit our [Releases](https://github.com/Clete-Inc/clete-releases/releases) page and download the appropriate version for your system.
+If you prefer to download and install manually:
+
+1. Visit our [Releases](https://github.com/Clete-Inc/clete-releases/releases) page
+2. Download the appropriate version for your system
+3. Verify the SHA256 checksum
+4. Extract the zip file
+5. Move the binary to your PATH (e.g., `/usr/local/bin` on Unix-like systems)
 
 ## Verify Installation
 
@@ -63,7 +89,15 @@ clete --version
 
 ## Updating
 
-To update to the latest version, simply run the install script again.
+To update to the latest stable version:
+```bash
+curl -sfL https://raw.githubusercontent.com/Clete-Inc/clete-releases/main/install.sh | sh
+```
+
+To update to a specific version:
+```bash
+curl -sfL https://raw.githubusercontent.com/Clete-Inc/clete-releases/main/install.sh | sh -s -- -v v1.0.0  # Replace with desired version
+```
 
 ## Support
 

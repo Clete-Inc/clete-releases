@@ -1,6 +1,15 @@
 #!/bin/sh
 set -e
 
+# Parse command line arguments
+SPECIFIC_VERSION=""
+while getopts "v:" opt; do
+    case $opt in
+        v) SPECIFIC_VERSION="$OPTARG" ;;
+        \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
+    esac
+done
+
 # Detect OS and architecture
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
@@ -13,8 +22,19 @@ case $ARCH in
     i386) ARCH="386" ;;
 esac
 
-# Get latest version
-VERSION=$(curl -s https://api.github.com/repos/Clete-Inc/clete-releases/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+# Get version based on input parameters
+if [ -n "$SPECIFIC_VERSION" ]; then
+    # Check if version exists
+    if ! curl -s -f "https://api.github.com/repos/Clete-Inc/clete-releases/releases/tags/$SPECIFIC_VERSION" > /dev/null; then
+        echo "Error: Version $SPECIFIC_VERSION not found"
+        exit 1
+    fi
+    VERSION="$SPECIFIC_VERSION"
+    echo "Installing specified version: $VERSION..."
+else
+    VERSION=$(curl -s https://api.github.com/repos/Clete-Inc/clete-releases/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+    echo "Installing latest stable version..."
+fi
 
 # Download URL
 DOWNLOAD_URL="https://github.com/Clete-Inc/clete-releases/releases/download/${VERSION}/clete_${VERSION}_${OS}_${ARCH}.zip"
